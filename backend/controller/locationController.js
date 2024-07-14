@@ -31,3 +31,5 @@ export const getTouristSpotsByDivision = asyncHandler(async(req,res)=>{
     res.json(spots.rows);
 })
 
+
+

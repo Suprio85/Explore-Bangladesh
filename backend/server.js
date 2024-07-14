@@ -10,6 +10,9 @@ import pool from './config/connectDB.js';
 // Routers files
 import userRouter from './Routers/userRouter.js';
 import locationRouter from './Routers/locationRouter.js';
+import touristSpotRouter from './Routers/touristspotRouter.js';
+import categoryRouter from './Routers/categoryRouter.js';
+import tourPackageRouter from './Routers/tourPackageRouter.js';
 
 
 // middlewares
@@ -35,6 +38,9 @@ app.use(morgan('dev'));
 // Routers
 app.use('/api/user', userRouter);  //Register , Login, userprofile and Logout
 app.use('/api/location',locationRouter);
+app.use('/api/touristspot',touristSpotRouter);
+app.use('/api/category',categoryRouter);
+app.use('/api/tp',tourPackageRouter);  // tp as tour package
 
 
 
