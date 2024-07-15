@@ -49,6 +49,7 @@ export const registerUser = asyncHandler(async(req,res)=>{
 
     const token = generateToken(res,newUser.rows[0].id);
     res.status(201).json({id:newUser.rows[0].user_id,name:newUser.rows[0].name,email:newUser.rows[0].email,token});
+    console.log("User registered");
 })
 
 // @desc    Login user
@@ -74,6 +75,7 @@ export const loginUser = asyncHandler(async(req,res)=>{
     }
     const token = generateToken(res,user.rows[0].user_id);
     res.status(200).json({id:user.rows[0].user_id,name:user.rows[0].name,email:user.rows[0].email,token});
+    console.log("User logged in");
 })
 
 
@@ -82,12 +84,14 @@ export const loginUser = asyncHandler(async(req,res)=>{
 // @access  Private
 
 export const getUserProfile = asyncHandler(async(req,res)=>{
+    console.log(req.user)
     const user = await pool.query('SELECT * FROM "User" WHERE user_id = $1',[req.user.user_id]);
     if(user.rows.length === 0){
         res.status(404);
         throw new Error('User not found');
     }
     res.status(200).json(user.rows[0]);
+
 })
 
 // @desc   Update user profile
@@ -147,6 +151,8 @@ export const updateUserProfile = asyncHandler(async(req,res)=>{
         throw new Error('User update unsuccessfull');
     }
     res.status(200).json(updatedUser.rows[0]);
+    console.log("User updated");
+
 })
 
 
@@ -155,9 +161,6 @@ export const updateUserProfile = asyncHandler(async(req,res)=>{
 // @access Private
 
 export const logoutUser = asyncHandler(async(req,res)=>{
-    res.cookie('token','none',{
-        expires: new Date(Date.now() + 10 * 1000),
-        httpOnly: true
-    });
+    
     res.status(200).json({message:'Logout successfull'});
 })

@@ -13,6 +13,7 @@ import locationRouter from './Routers/locationRouter.js';
 import touristSpotRouter from './Routers/touristspotRouter.js';
 import categoryRouter from './Routers/categoryRouter.js';
 import tourPackageRouter from './Routers/tourPackageRouter.js';
+import orderRouter from './Routers/orderRouter.js';
 
 
 // middlewares
@@ -41,7 +42,7 @@ app.use('/api/location',locationRouter);
 app.use('/api/touristspot',touristSpotRouter);
 app.use('/api/category',categoryRouter);
 app.use('/api/tp',tourPackageRouter);  // tp as tour package
-
+app.use('/api/order',orderRouter);
 
 
 

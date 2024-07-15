@@ -51,3 +51,50 @@ export const getTourPackagePlaces = asyncHandler(async(req,res)=>{
     }
     res.json(spots.rows);
 })
+
+// @desc    Create cart for order
+// @route   POST /api/tourpackage/cart
+// @access  Private
+
+export const createCart = asyncHandler(async(req,res)=>{
+    console.log(req.body);
+    const tour_packages = req.body.cart;
+    const user_id = req.user.user_id;
+    const query = `INSERT INTO "Cart" (price) VALUES (0) RETURNING id`;
+    const cart = await pool.query(query);
+    const cart_id = cart.rows[0].id;
+    console.log(cart_id);
+    let total_cost = 0;
+    for (const tour_pacakage of tour_packages) {
+     const price = await pool.query(`SELECT price FROM "Tour_Packages" WHERE id = $1`,[tour_pacakage.id]);
+     if(price.rows.length === 0){
+         res.status(404);
+         throw new Error('Tour package not found');
+     }
+     const cost = price.rows[0].price*tour_pacakage.quantity;
+     total_cost += cost;
+
+     const query = `INSERT INTO "Cart_Package" (tour_package_id,cart_id,quantity,price) VALUES ($1,$2,$3,$4) RETURNING *`;
+
+     const response= await pool.query(query,[tour_pacakage.id,cart_id,tour_pacakage.quantity,cost]);
+        if(response.rows.length === 0){
+            res.status(404);
+            throw new Error( 'not Inserted into cart');
+        }
+    }
+
+    console.log("Total cost",total_cost);
+    const response= await pool.query(`UPDATE "Cart" SET price = $1 WHERE id = $2 RETURNING *`,[total_cost,cart_id]);
+    if(response.rows[0].length === 0){
+        res.status(404);
+        throw new Error( 'not updated cart price');
+    }
+    res.json({cart_id});
+    console.log("Cart created. Ready for the order");
+})
+
+// 
+
+
+
+

@@ -1,5 +1,6 @@
 import pool from '../config/connectDB.js';
 import asyncHandler from 'express-async-handler';
+import {format,formatDate} from 'date-fns';
 
 // @desc    Get all tourist spots
 // @route   GET /api/touristspot
@@ -127,6 +128,10 @@ export const getReviewsByTouristSpotId = asyncHandler(async(req,res)=>{
                     on r.tourist_spot_id = ts.id
                     WHERE ts.id = $1`
     const reviews = await pool.query(query,[id]);
+    if(reviews.rows.length === 0){
+        res.status(404);
+        throw new Error('No reviews found');
+    }
     res.json(reviews.rows);
 })
 
@@ -142,7 +147,21 @@ export const postReviewsByTouristSpotId = asyncHandler(async(req,res)=>{
         res.status(400);
         throw new Error('Please fill  the fields');
     }
-    
+
+    const query = `INSERT INTO "Review"(rating,comment,tourist_spot_id,user_id,date_time) 
+    VALUES($1,$2,$3,$4,$5) RETURNING *`
+
+    const review = await pool.query(query,[rating,comment,tourist_spot_id,user_id,format(new Date(),'yyyy-MM-dd HH:mm:ss')]);
+   if(review.rows.length === 0){
+       res.status(400);
+       throw new Error('Review post unsuccessfull');
+   }
+    res.status(201).json(review.rows[0]);
+    console.log("Review posted successfully");
+
+                    
 })
+
+
 
 
