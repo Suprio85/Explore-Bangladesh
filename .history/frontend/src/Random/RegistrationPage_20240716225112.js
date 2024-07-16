@@ -6,8 +6,8 @@ const Login = ({ isActive,setAuth }) => {
     const [emailFocus, setEmailFocus] = useState(false);
     const [passwordFocus, setPasswordFocus] = useState(false);
 
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+    const [email, setEmail] = useState(" ");
+    const [password, setPassword] = useState(" ");
     
     const onSubmitLogin = async e => {
         e.preventDefault();
@@ -20,18 +20,18 @@ const Login = ({ isActive,setAuth }) => {
             body: JSON.stringify(body)
         });
         const parseRes = await response.json();
-        console.log("MIM"+ body.email + body.password);
         
         if (response.ok) {
             localStorage.setItem('token', parseRes.token);
             setAuth(true);
+            console.log("lo Suc");
             window.location = "/dashboard";
             console.log("log In Suc");
             console.log(token);
         }
         else {
             console.log(response);
-            console.error("Failed to Login")
+            console.error("Failed to Registration")
         }
         
     }
@@ -53,7 +53,7 @@ const Login = ({ isActive,setAuth }) => {
                             <input className='bg-transparent w-full px-3' onFocus={() => setPasswordFocus(true)} onChange={ (e)=>{ setPassword(e.target.value) }}></input></div>
                     </div>
                     <div className='absolute font-ubuntu text-white bottom-10  flex h-10 text-2xl rounded-sm w-full justify-center'>
-                        <button type='submit'>LOG IN</button>
+                        <button>LOG IN</button>
                     </div>
                 </form>
             </div>
@@ -105,7 +105,7 @@ const SignUp = ({ isActive, setAuth }) => {
             localStorage.setItem('token', parseRes.token);
             setAuth(true);
             console.log(token);
-            // window.location = "/";
+            window.location = "/";
         }
         else {
             console.log(response);

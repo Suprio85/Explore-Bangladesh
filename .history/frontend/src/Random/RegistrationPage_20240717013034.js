@@ -105,7 +105,7 @@ const SignUp = ({ isActive, setAuth }) => {
             localStorage.setItem('token', parseRes.token);
             setAuth(true);
             console.log(token);
-            // window.location = "/";
+            window.location = "/";
         }
         else {
             console.log(response);

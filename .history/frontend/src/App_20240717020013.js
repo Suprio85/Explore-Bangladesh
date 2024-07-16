@@ -28,9 +28,9 @@ function App() {
       <Navbar/>
       <Routes>
         <Route path="/home" element={<Homepage/>}/>  
-        <Route path="/signup" element={!isAuthenticated ? <Registration setAuth={setAuth}/>:<Dashboard setAuth={setAuth}/>}/>    
+        <Route path="/signup" element={isAuthenticated ? <Registration setAuth={setAuth}/>:<Dashboard setAuth={setAuth}/>}/>    
         <Route path="/" element={<Homepage/>}/>  
-        <Route path="/dashboard" element={isAuthenticated ? <Dashboard setAuth={setAuth}/>:<Registration setAuth={setAuth}/>}/>
+        <Route path="/dashboard" element={isAuthenticated ? <Dashboard/>:<Registration/>}/>
       </Routes>
     </Router>
   );

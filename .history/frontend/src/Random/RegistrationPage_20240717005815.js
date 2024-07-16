@@ -6,8 +6,8 @@ const Login = ({ isActive,setAuth }) => {
     const [emailFocus, setEmailFocus] = useState(false);
     const [passwordFocus, setPasswordFocus] = useState(false);
 
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+    const [email, setEmail] = useState(" ");
+    const [password, setPassword] = useState(" ");
     
     const onSubmitLogin = async e => {
         e.preventDefault();
@@ -105,7 +105,7 @@ const SignUp = ({ isActive, setAuth }) => {
             localStorage.setItem('token', parseRes.token);
             setAuth(true);
             console.log(token);
-            // window.location = "/";
+            window.location = "/";
         }
         else {
             console.log(response);

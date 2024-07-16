@@ -2,12 +2,12 @@ import { token } from 'morgan';
 import React, { useEffect, useState } from 'react';
 
 const url = "https://cdn.pixabay.com/photo/2018/07/15/14/23/bangladesh-3539687_960_720.jpg";
-const Login = ({ isActive,setAuth }) => {
+const Login = ({ isActive }) => {
     const [emailFocus, setEmailFocus] = useState(false);
     const [passwordFocus, setPasswordFocus] = useState(false);
 
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+    const [email, setEmail] = useState(" ");
+    const [password, setPassword] = useState(" ");
     
     const onSubmitLogin = async e => {
         e.preventDefault();
@@ -20,18 +20,18 @@ const Login = ({ isActive,setAuth }) => {
             body: JSON.stringify(body)
         });
         const parseRes = await response.json();
-        console.log("MIM"+ body.email + body.password);
         
         if (response.ok) {
             localStorage.setItem('token', parseRes.token);
             setAuth(true);
+            console.log("lo Suc");
             window.location = "/dashboard";
             console.log("log In Suc");
             console.log(token);
         }
         else {
             console.log(response);
-            console.error("Failed to Login")
+            console.error("Failed to Registration")
         }
         
     }
@@ -41,19 +41,19 @@ const Login = ({ isActive,setAuth }) => {
     return (
         <div className={` h-screen flex justify-center items-center ${isActive ? '' : 'pointer-events-none'}`}>
             <div className=' w-2/3 min-h-96  absolute flex justify-center bg-white bg-opacity-20 rounded-xl items-center'>
-                <form className='w-full' onSubmit={onSubmitLogin}>
+                <form className='w-full'>
                     <div className='px-20 w-full justify-between items-center flex-col group  hover:cursor-pointer'>
                         <div className=' font-ubuntu text-2xl text-white'><label>EMAIL</label></div>
                         <div className={`flex-grow relative top-28 border-b-2  text-white bg-black bg-opacity-20 text-2xl font-saira ${emailFocus ? ' -translate-y-28  block' : 'hidden group-hover:animate-glowUp group-hover:block'}  `}>
-                            <input className='bg-transparent w-full px-3' onFocus={() => setEmailFocus(true)} onChange={ (e)=>{ setEmail(e.target.value) }}></input></div>
+                            <input className='bg-transparent w-full px-3' onFocus={() => setEmailFocus(true)} onChange={ { setEmail }}></input></div>
                     </div>
                     <div className='px-20 w-full justify-between items-center flex-col group hover:cursor-pointer'>
                         <div className=' font-ubuntu text-2xl text-white'><label>PASSWORD</label></div>
                         <div className={`flex-grow relative top-28 border-b-2  text-white bg-black bg-opacity-20 text-2xl font-saira ${passwordFocus ? ' -translate-y-28  block' : 'hidden group-hover:animate-glowUp group-hover:block'}  `}>
-                            <input className='bg-transparent w-full px-3' onFocus={() => setPasswordFocus(true)} onChange={ (e)=>{ setPassword(e.target.value) }}></input></div>
+                            <input className='bg-transparent w-full px-3' onFocus={() => setPasswordFocus(true)} onChange={{ setPassword }}></input></div>
                     </div>
                     <div className='absolute font-ubuntu text-white bottom-10  flex h-10 text-2xl rounded-sm w-full justify-center'>
-                        <button type='submit'>LOG IN</button>
+                        <button>LOG IN</button>
                     </div>
                 </form>
             </div>
@@ -105,7 +105,7 @@ const SignUp = ({ isActive, setAuth }) => {
             localStorage.setItem('token', parseRes.token);
             setAuth(true);
             console.log(token);
-            // window.location = "/";
+            window.location = "/";
         }
         else {
             console.log(response);
@@ -191,7 +191,7 @@ const Registration = ({ isActive, setAuth }) => {
                     <div className='opacity-30 scale-75 z-0' onClick={() => { setVariable(false) }}><SignUp isActive={false} /></div>
                 </div>
                 <div className='absolute w-2/3 right-0 top-0 animate-_right '>
-                    <div className='z-10'><Login isActive={true} setAuth={setAuth} /></div>
+                    <div className='z-10'><Login isActive={true} /></div>
                 </div>
             </div>)
                 : (<div>

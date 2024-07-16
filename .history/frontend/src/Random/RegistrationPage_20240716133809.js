@@ -1,59 +1,35 @@
-import { token } from 'morgan';
 import React, { useEffect, useState } from 'react';
 
 const url = "https://cdn.pixabay.com/photo/2018/07/15/14/23/bangladesh-3539687_960_720.jpg";
-const Login = ({ isActive,setAuth }) => {
+const Login = ({ isActive }) => {
     const [emailFocus, setEmailFocus] = useState(false);
     const [passwordFocus, setPasswordFocus] = useState(false);
 
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    
-    const onSubmitLogin = async e => {
-        e.preventDefault();
-        const body = {  email, password, };
-        console.log(body);
-        const response = await fetch("http://localhost:5000/api/user/login", {
-            method: "POST",
-            credentials: 'include',
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(body)
-        });
-        const parseRes = await response.json();
-        console.log("MIM"+ body.email + body.password);
-        
-        if (response.ok) {
-            localStorage.setItem('token', parseRes.token);
-            setAuth(true);
-            window.location = "/dashboard";
-            console.log("log In Suc");
-            console.log(token);
-        }
-        else {
-            console.log(response);
-            console.error("Failed to Login")
-        }
-        
-    }
-    
+    const [email, setEmail] = useState(" ");
+    const [password, setPassword] = useState(" ");
 
-    
+
+
+
+    const onSumbitLogin = () => {
+
+    }
     return (
         <div className={` h-screen flex justify-center items-center ${isActive ? '' : 'pointer-events-none'}`}>
             <div className=' w-2/3 min-h-96  absolute flex justify-center bg-white bg-opacity-20 rounded-xl items-center'>
-                <form className='w-full' onSubmit={onSubmitLogin}>
+                <form className='w-full'>
                     <div className='px-20 w-full justify-between items-center flex-col group  hover:cursor-pointer'>
                         <div className=' font-ubuntu text-2xl text-white'><label>EMAIL</label></div>
                         <div className={`flex-grow relative top-28 border-b-2  text-white bg-black bg-opacity-20 text-2xl font-saira ${emailFocus ? ' -translate-y-28  block' : 'hidden group-hover:animate-glowUp group-hover:block'}  `}>
-                            <input className='bg-transparent w-full px-3' onFocus={() => setEmailFocus(true)} onChange={ (e)=>{ setEmail(e.target.value) }}></input></div>
+                            <input className='bg-transparent w-full px-3' onFocus={() => setEmailFocus(true)} onChange={(e) => { setEmail }}></input></div>
                     </div>
                     <div className='px-20 w-full justify-between items-center flex-col group hover:cursor-pointer'>
                         <div className=' font-ubuntu text-2xl text-white'><label>PASSWORD</label></div>
                         <div className={`flex-grow relative top-28 border-b-2  text-white bg-black bg-opacity-20 text-2xl font-saira ${passwordFocus ? ' -translate-y-28  block' : 'hidden group-hover:animate-glowUp group-hover:block'}  `}>
-                            <input className='bg-transparent w-full px-3' onFocus={() => setPasswordFocus(true)} onChange={ (e)=>{ setPassword(e.target.value) }}></input></div>
+                            <input className='bg-transparent w-full px-3' onFocus={() => setPasswordFocus(true)} onChange={(e) => { setPassword }></input></div>
                     </div>
                     <div className='absolute font-ubuntu text-white bottom-10  flex h-10 text-2xl rounded-sm w-full justify-center'>
-                        <button type='submit'>LOG IN</button>
+                        <button>LOG IN</button>
                     </div>
                 </form>
             </div>
@@ -76,9 +52,9 @@ const Label = ({ Label, setFunction }) => {
 const SignUp = ({ isActive, setAuth }) => {
     const [emailFocus, setEmailFocus] = useState(false);
     const [passwordFocus, setPasswordFocus] = useState(false);
-    
+
     const [isBangladeshi, setIsBangladeshi] = useState(1);
-    
+
     const [name, SetName] = useState(" ");
     const [email, SetEmail] = useState(" ");
     const [password, setPassword] = useState(" ");
@@ -88,7 +64,7 @@ const SignUp = ({ isActive, setAuth }) => {
     const [city, setCity] = useState(" ");
     const [street, setStreet] = useState(" ");
     const [postal_code, setPostal_code] = useState(" ");
-    
+
     const onSubmitRegistraionForm = async e => {
         e.preventDefault();
         const body = { name, email, password, confirm_password, country, division, city, street, postal_code };
@@ -100,12 +76,11 @@ const SignUp = ({ isActive, setAuth }) => {
             body: JSON.stringify(body)
         });
         const parseRes = await response.json();
-        
+
         if (response.ok) {
             localStorage.setItem('token', parseRes.token);
             setAuth(true);
-            console.log(token);
-            // window.location = "/";
+            window.location = "/";
         }
         else {
             console.log(response);
@@ -179,9 +154,9 @@ const SignUp = ({ isActive, setAuth }) => {
 }
 const Registration = ({ isActive, setAuth }) => {
     const [variable, setVariable] = useState(false);
-    
+
     useEffect(() => {
-        
+
     }, [variable]);
     return (
         <div className='relative w-full h-screen bg-slate-900'>
@@ -191,7 +166,7 @@ const Registration = ({ isActive, setAuth }) => {
                     <div className='opacity-30 scale-75 z-0' onClick={() => { setVariable(false) }}><SignUp isActive={false} /></div>
                 </div>
                 <div className='absolute w-2/3 right-0 top-0 animate-_right '>
-                    <div className='z-10'><Login isActive={true} setAuth={setAuth} /></div>
+                    <div className='z-10'><Login isActive={true} /></div>
                 </div>
             </div>)
                 : (<div>

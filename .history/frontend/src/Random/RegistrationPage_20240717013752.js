@@ -6,12 +6,12 @@ const Login = ({ isActive,setAuth }) => {
     const [emailFocus, setEmailFocus] = useState(false);
     const [passwordFocus, setPasswordFocus] = useState(false);
 
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+    const [_email, set_Email] = useState("");
+    const [_password, set_Password] = useState("");
     
     const onSubmitLogin = async e => {
         e.preventDefault();
-        const body = {  email, password, };
+        const body = {  _email, _password, };
         console.log(body);
         const response = await fetch("http://localhost:5000/api/user/login", {
             method: "POST",
@@ -20,7 +20,7 @@ const Login = ({ isActive,setAuth }) => {
             body: JSON.stringify(body)
         });
         const parseRes = await response.json();
-        console.log("MIM"+ body.email + body.password);
+        console.log("MIM"+ body._email + body._password);
         
         if (response.ok) {
             localStorage.setItem('token', parseRes.token);
@@ -45,12 +45,12 @@ const Login = ({ isActive,setAuth }) => {
                     <div className='px-20 w-full justify-between items-center flex-col group  hover:cursor-pointer'>
                         <div className=' font-ubuntu text-2xl text-white'><label>EMAIL</label></div>
                         <div className={`flex-grow relative top-28 border-b-2  text-white bg-black bg-opacity-20 text-2xl font-saira ${emailFocus ? ' -translate-y-28  block' : 'hidden group-hover:animate-glowUp group-hover:block'}  `}>
-                            <input className='bg-transparent w-full px-3' onFocus={() => setEmailFocus(true)} onChange={ (e)=>{ setEmail(e.target.value) }}></input></div>
+                            <input className='bg-transparent w-full px-3' onFocus={() => setEmailFocus(true)} onChange={ (e)=>{ set_Email(e.target.value) }}></input></div>
                     </div>
                     <div className='px-20 w-full justify-between items-center flex-col group hover:cursor-pointer'>
                         <div className=' font-ubuntu text-2xl text-white'><label>PASSWORD</label></div>
                         <div className={`flex-grow relative top-28 border-b-2  text-white bg-black bg-opacity-20 text-2xl font-saira ${passwordFocus ? ' -translate-y-28  block' : 'hidden group-hover:animate-glowUp group-hover:block'}  `}>
-                            <input className='bg-transparent w-full px-3' onFocus={() => setPasswordFocus(true)} onChange={ (e)=>{ setPassword(e.target.value) }}></input></div>
+                            <input className='bg-transparent w-full px-3' onFocus={() => setPasswordFocus(true)} onChange={ (e)=>{ set_Password(e.target.value) }}></input></div>
                     </div>
                     <div className='absolute font-ubuntu text-white bottom-10  flex h-10 text-2xl rounded-sm w-full justify-center'>
                         <button type='submit'>LOG IN</button>
@@ -105,7 +105,7 @@ const SignUp = ({ isActive, setAuth }) => {
             localStorage.setItem('token', parseRes.token);
             setAuth(true);
             console.log(token);
-            // window.location = "/";
+            window.location = "/";
         }
         else {
             console.log(response);

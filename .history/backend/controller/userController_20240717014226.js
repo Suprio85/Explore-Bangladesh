@@ -86,7 +86,6 @@ export const loginUser = asyncHandler(async(req,res)=>{
 // @access  Private
 
 export const getUserProfile = asyncHandler(async(req,res)=>{
-    console.log("GOT SIGNAL");
     console.log(req.user)
     const user = await pool.query('SELECT * FROM "User" WHERE user_id = $1',[req.user.user_id]);
     if(user.rows.length === 0){
@@ -94,7 +93,6 @@ export const getUserProfile = asyncHandler(async(req,res)=>{
         throw new Error('User not found');
     }
     res.status(200).json(user.rows[0]);
-    console.log(user.rows[0]);
 
 })
 

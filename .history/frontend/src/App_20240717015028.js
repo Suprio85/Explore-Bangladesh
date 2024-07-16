@@ -19,18 +19,18 @@ function App() {
     setIsAuthenticated(authState==='true');
   },[])
 
-  const setAuth=(boolean)=>{
-    setIsAuthenticated(boolean);
-    localStorage.setItem('isAuthenticated',boolean.toString());
+  const setAuth=(x)=>{
+    setIsAuthenticated(x);
+    localStorage.setItem('isAuthenticated',x.toString());
   }
   return (
     <Router>
       <Navbar/>
       <Routes>
         <Route path="/home" element={<Homepage/>}/>  
-        <Route path="/signup" element={!isAuthenticated ? <Registration setAuth={setAuth}/>:<Dashboard setAuth={setAuth}/>}/>    
+        <Route path="/signup" element={isAuthenticated ? <Registration setAuth={setAuth}/>:<Dashboard setAuth={setAuth}/>}/>    
         <Route path="/" element={<Homepage/>}/>  
-        <Route path="/dashboard" element={isAuthenticated ? <Dashboard setAuth={setAuth}/>:<Registration setAuth={setAuth}/>}/>
+        <Route path="/dashboard" element={isAuthenticated ? <Dashboard/>:<Registration/>}
       </Routes>
     </Router>
   );

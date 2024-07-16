@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 const url = "https://cdn.pixabay.com/photo/2020/04/15/09/16/castle-5045815_1280.jpg";
 
-const Dashboard = ({setAuth}) => {
+const Dashboard = () => {
     
     const [name, SetName] = useState(" ");
     const [email, SetEmail] = useState(" ");
@@ -11,13 +11,6 @@ const Dashboard = ({setAuth}) => {
     const [city, setCity] = useState(" ");
     const [street, setStreet] = useState(" ");
     const [postal_code, setPostal_code] = useState(" ");
-
-    const logout =(e)=>{
-        e.preventDefault();
-        localStorage.removeItem('token');
-        setAuth(false);
-
-    }
     
     const getProfile =async ()=>{
         console.log("token "+localStorage.token);
@@ -93,8 +86,8 @@ const Dashboard = ({setAuth}) => {
                 </div>
             </div>
             <div className='absolute bottom-20 font-saira text-white text-xl w-full flex justify-center'>
-                <div>
-                    <button className=' mx-1 font-ubuntu hover:cursor-pointer' onClick={logout}>LOG OUT</button>
+                <div>Already Have An Account ?
+                    <button className=' mx-1 font-ubuntu hover:cursor-pointer'>LOG IN</button>
                 </div>
             </div>
             
