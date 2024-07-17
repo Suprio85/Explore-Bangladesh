@@ -85,7 +85,9 @@ export const loginUser = asyncHandler(async(req,res)=>{
 
 export const getUserProfile = asyncHandler(async(req,res)=>{
     console.log(req.user)
-    const user = await pool.query('SELECT * FROM "User" WHERE user_id = $1',[req.user.user_id]);
+    const user = await pool.query(`SELECT * FROM "User" LEFT JOIN
+        "Adress" ON "User".adress_id = "Adress".id
+        WHERE user_id = $1`,[req.user.user_id]);
     if(user.rows.length === 0){
         res.status(404);
         throw new Error('User not found');
