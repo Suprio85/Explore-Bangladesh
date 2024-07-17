@@ -11,6 +11,7 @@ import pool from '../config/connectDB.js'
 export const registerUser = asyncHandler(async(req,res)=>{
     console.log(req.body);
     let {name,email,password,confirm_password,country,division,city,street,postal_code} = req.body;
+    console.log(country);
     if(!name || !email || !password || !country || !confirm_password){
         res.status(400);
         throw new Error('Please fill all the necessary fields');
@@ -47,7 +48,7 @@ export const registerUser = asyncHandler(async(req,res)=>{
         throw new Error('User register unsuccessfull');
     }
 
-    const token = generateToken(res,newUser.rows[0].id);
+    const token = generateToken(res,newUser.rows[0].user_id);
     res.status(201).json({id:newUser.rows[0].user_id,name:newUser.rows[0].name,email:newUser.rows[0].email,token});
     console.log("User registered");
 })
@@ -88,7 +89,9 @@ export const loginUser = asyncHandler(async(req,res)=>{
 export const getUserProfile = asyncHandler(async(req,res)=>{
     console.log("GOT SIGNAL");
     console.log(req.user)
-    const user = await pool.query('SELECT * FROM "User" WHERE user_id = $1',[req.user.user_id]);
+    const user = await pool.query(`SELECT * FROM "User" LEFT JOIN
+        "Adress" ON "User".adress_id = "Adress".id
+        WHERE user_id = $1`,[req.user.user_id]);
     if(user.rows.length === 0){
         res.status(404);
         throw new Error('User not found');

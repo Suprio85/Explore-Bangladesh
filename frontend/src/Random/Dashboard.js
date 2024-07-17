@@ -24,8 +24,8 @@ const Dashboard = ({setAuth}) => {
         try {
             const res= await fetch("http://localhost:5000/api/user/profile",{
                 method :"GET",
-                headers:{
-                    token:localStorage.token
+                headers: {
+                    Authorization: `Bearer ${localStorage.token}`
                 }
             });
             const parseData = await res.json();
@@ -65,30 +65,42 @@ const Dashboard = ({setAuth}) => {
                             <div className='w-1/3 text-white font-ubuntu'>EMAIL</div>
                             <div className='flex-grow text-white font-titillium'>{email}</div>
                         </div>
-                        <div className='w-2/3 text-xl full h-full flex'>
-                            <div className='w-1/3 text-white font-ubuntu'>PASSWORD</div>
-                            <div className='flex-grow text-white font-titillium'>{password}</div>
-                        </div>
-                        <div className='w-2/3 text-xl full h-full flex'>
+                        {
+                        country &&
+                        (<div className='w-2/3 text-xl full h-full flex'>
                             <div className='w-1/3 text-white font-ubuntu'>COUNTRY</div>
                             <div className='flex-grow text-white font-titillium'>{country}</div>
-                        </div>
-                        <div className='w-2/3 text-xl full h-full flex'>
+                        </div>)
+                        }
+                        {
+                        division &&
+                        (<div className='w-2/3 text-xl full h-full flex'>
                             <div className='w-1/3 text-white font-ubuntu'>DIVISION</div>
                             <div className='flex-grow text-white font-titillium'>{division}</div>
-                        </div>
+                        </div>)
+                        }
+
+                        { city && (
                         <div className='w-2/3 text-xl full h-full flex'>
                             <div className='w-1/3 text-white font-ubuntu'>CITY</div>
                             <div className='flex-grow text-white font-titillium'>{city}</div>
                         </div>
+                        )
+                        }
+                        { street && (
                         <div className='w-2/3 text-xl full h-full flex'>
                             <div className='w-1/3 text-white font-ubuntu'>STREET</div>
                             <div className='flex-grow text-white font-titillium'>{street}</div>
                         </div>
+                        )
+                        }
+                        { postal_code && (
                         <div className='w-2/3 text-xl full h-full flex'>
                             <div className='w-1/3 text-white font-ubuntu'>POSTAL CODE</div>
                             <div className='flex-grow text-white font-titillium'>{postal_code}</div>
                         </div>
+                        )
+                        }
                     </div>
                 </div>
             </div>

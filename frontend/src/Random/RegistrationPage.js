@@ -21,9 +21,12 @@ const Login = ({ isActive,setAuth }) => {
         });
         const parseRes = await response.json();
         console.log("MIM"+ body.email + body.password);
+        console.log(parseRes);
+        console.log(parseRes.token);
         
         if (response.ok) {
             localStorage.setItem('token', parseRes.token);
+
             setAuth(true);
             window.location = "/dashboard";
             console.log("log In Suc");
