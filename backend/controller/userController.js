@@ -47,7 +47,7 @@ export const registerUser = asyncHandler(async(req,res)=>{
         throw new Error('User register unsuccessfull');
     }
 
-    const token = generateToken(res,newUser.rows[0].id);
+    const token = generateToken(res,newUser.rows[0].user_id);
     res.status(201).json({id:newUser.rows[0].user_id,name:newUser.rows[0].name,email:newUser.rows[0].email,token});
     console.log("User registered");
 })

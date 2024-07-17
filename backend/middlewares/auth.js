@@ -9,21 +9,24 @@ export const protect = asyncHandler(async (req, res, next) => {
     if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
          try {
               token = req.headers.authorization.split(' ')[1];
-              console.log("Token :" + token);   
+              console.log("Token :" + token);  
+              console.log("JWT_SECRET :" + process.env.JWT_SECRET); 
               const decoded = jwt.verify(token, process.env.JWT_SECRET);
-              //  console.log("Decoded :" + decoded);
+                console.log("Decoded :" + decoded.id);
+                console.log("Decoded :" + decoded.user_id);
             const user = await pool.query
             ('SELECT * FROM "User" WHERE user_id = $1',[decoded.id]);
+               console.log("User :" + user);
             if(user.rows.length === 0){
                 res.status(404);
                 throw new Error('User not found');
             }
-          
+            console.log("User :=" + user.rows[0]);
             req.user = user.rows[0]
             next();
          } catch (error) {
               res.status(401);
-              throw new Error('Not authorized, token failed');
+              throw new Error('authorized failed, error: '+error.message);
          }
     }
     if(!token){
