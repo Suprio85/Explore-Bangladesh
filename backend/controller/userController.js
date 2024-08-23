@@ -11,6 +11,7 @@ import pool from '../config/connectDB.js'
 export const registerUser = asyncHandler(async(req,res)=>{
     console.log(req.body);
     let {name,email,password,confirm_password,country,division,city,street,postal_code} = req.body;
+    console.log(country);
     if(!name || !email || !password || !country || !confirm_password){
         res.status(400);
         throw new Error('Please fill all the necessary fields');
@@ -58,7 +59,9 @@ export const registerUser = asyncHandler(async(req,res)=>{
 
 
 export const loginUser = asyncHandler(async(req,res)=>{
+
     const {email,password} = req.body;
+    console.log("GOT SIGNAL "+email+password);
     if(!email || !password){
         res.status(400);
         throw new Error('Please fill all the fields');
@@ -84,6 +87,7 @@ export const loginUser = asyncHandler(async(req,res)=>{
 // @access  Private
 
 export const getUserProfile = asyncHandler(async(req,res)=>{
+    console.log("GOT SIGNAL");
     console.log(req.user)
     const user = await pool.query(`SELECT * FROM "User" LEFT JOIN
         "Adress" ON "User".adress_id = "Adress".id
@@ -93,6 +97,7 @@ export const getUserProfile = asyncHandler(async(req,res)=>{
         throw new Error('User not found');
     }
     res.status(200).json(user.rows[0]);
+    console.log(user.rows[0]);
 
 })
 
