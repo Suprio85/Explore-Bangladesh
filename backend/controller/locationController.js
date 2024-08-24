@@ -7,7 +7,7 @@ import pool from '../config/connectDB.js';
 // @access  Public
 export const getDivisions = asyncHandler(async(req,res)=>{
     const query = `SELECT DISTINCT(l.division) FROM tour_db."Location" l 
-                  left join tour_db."Tourist_Spot" ts 
+                   join tour_db."Tourist_Spot" ts 
                    on l.location_id = ts.location_id`
     const locations = await pool.query(query);
     res.json(locations.rows);

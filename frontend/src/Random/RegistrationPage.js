@@ -2,7 +2,7 @@ import { token } from 'morgan';
 import React, { useEffect, useState } from 'react';
 
 const url = "https://cdn.pixabay.com/photo/2018/07/15/14/23/bangladesh-3539687_960_720.jpg";
-const Login = ({ isActive,setAuth }) => {
+const Login = ({ isActive,setAuth,setVariable}) => {
     const [emailFocus, setEmailFocus] = useState(false);
     const [passwordFocus, setPasswordFocus] = useState(false);
 
@@ -30,7 +30,6 @@ const Login = ({ isActive,setAuth }) => {
             setAuth(true);
             window.location = "/dashboard";
             console.log("log In Suc");
-            console.log(token);
         }
         else {
             console.log(response);
@@ -60,6 +59,12 @@ const Login = ({ isActive,setAuth }) => {
                     </div>
                 </form>
             </div>
+            { isActive && (<div className='absolute bottom-20 font-saira text-white text-xl w-full flex justify-center'>
+                <div>Didn't have an Account ?
+                    <button className=' mx-1 font-ubuntu hover:cursor-pointer' onClick={() => setVariable(false)}>SignUp</button>
+                </div>
+            </div>)
+          }
         </div>
     )
 }
@@ -76,10 +81,7 @@ const Label = ({ Label, setFunction }) => {
         </div>
     )
 }
-const SignUp = ({ isActive, setAuth }) => {
-    const [emailFocus, setEmailFocus] = useState(false);
-    const [passwordFocus, setPasswordFocus] = useState(false);
-    
+const SignUp = ({ isActive, setAuth,setVariable}) => { 
     const [isBangladeshi, setIsBangladeshi] = useState(1);
     
     const [name, SetName] = useState(" ");
@@ -108,7 +110,6 @@ const SignUp = ({ isActive, setAuth }) => {
             localStorage.setItem('token', parseRes.token);
             setAuth(true);
             console.log(token);
-            // window.location = "/";
         }
         else {
             console.log(response);
@@ -177,11 +178,18 @@ const SignUp = ({ isActive, setAuth }) => {
                     </div>
                 </form>
             </div>
+            { isActive && (<div className='absolute bottom-20 font-saira text-white text-xl w-full flex justify-center'>
+                <div>Already Have An Account ?
+                    <button className=' mx-1 font-ubuntu hover:cursor-pointer' onClick={() => setVariable(true)}>LOG IN</button>
+                </div>
+            </div>)
+          }
         </div>
     )
 }
-const Registration = ({ isActive, setAuth }) => {
+const Registration = ({setAuth}) => {
     const [variable, setVariable] = useState(false);
+
     
     useEffect(() => {
         
@@ -194,7 +202,7 @@ const Registration = ({ isActive, setAuth }) => {
                     <div className='opacity-30 scale-75 z-0' onClick={() => { setVariable(false) }}><SignUp isActive={false} /></div>
                 </div>
                 <div className='absolute w-2/3 right-0 top-0 animate-_right '>
-                    <div className='z-10'><Login isActive={true} setAuth={setAuth} /></div>
+                    <div className='z-10'><Login isActive={true} setAuth={setAuth} setVariable={setVariable}/></div>
                 </div>
             </div>)
                 : (<div>
@@ -202,16 +210,10 @@ const Registration = ({ isActive, setAuth }) => {
                         <div className='opacity-30 scale-75 z-0' onClick={() => { setVariable(true) }}><Login isActive={false} /></div>
                     </div>
                     <div className='absolute w-2/3 left-0 top-0 animate-_right'>
-                        <div className='z-10'><SignUp isActive={true} setAuth={setAuth} /></div>
+                        <div className='z-10'><SignUp isActive={true} setAuth={setAuth} setVariable={setVariable}/></div>
                     </div>
                 </div>)
             }
-            <div className='absolute bottom-20 font-saira text-white text-xl w-full flex justify-center'>
-                <div>Already Have An Account ?
-                    <button className=' mx-1 font-ubuntu hover:cursor-pointer' onClick={() => setVariable(true)}>LOG IN</button>
-                </div>
-            </div>
-
         </div>
     );
 }

@@ -15,8 +15,8 @@ const Dashboard = ({setAuth}) => {
     const logout =(e)=>{
         e.preventDefault();
         localStorage.removeItem('token');
+        localStorage.removeItem('isAuthenticated');
         setAuth(false);
-
     }
     
     const getProfile =async ()=>{

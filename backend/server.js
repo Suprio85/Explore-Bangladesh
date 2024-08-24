@@ -38,7 +38,7 @@ app.use(morgan('dev'));
 
 // Routers
 app.use('/api/user', userRouter);  //Register , Login, userprofile and Logout
-app.use('/api/location',locationRouter);
+app.use('/api/location',locationRouter); //division, specific tourist spot in division
 app.use('/api/touristspot',touristSpotRouter);
 app.use('/api/category',categoryRouter);
 app.use('/api/tp',tourPackageRouter);  // tp as tour package

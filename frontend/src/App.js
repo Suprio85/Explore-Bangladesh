@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
 import './App.css';
 import Homepage from './Homepage/Homepage';  // Ensure correct path and component name
-import Navbar from './navbar';  // Ensure the component name matches the file name if case-sensitive
+import Navbar from './navbar';  
 import Registration from './Random/RegistrationPage';
 import Dashboard from './Random/Dashboard';
+import Footer from './components/Footer';
+import NotFound from './pages/NotFound';
 
 import {
   BrowserRouter as Router,
@@ -13,25 +15,30 @@ import {
 
 function App() {
   const [isAuthenticated,setIsAuthenticated]=useState(false);
-
   useEffect(()=>{
-    const authState =localStorage.getItem('isAuthenticated');
-    setIsAuthenticated(authState==='true');
+    const checkAuth=localStorage.getItem('isAuthenticated')==='true';
+    if(checkAuth){
+      setIsAuthenticated(true);
+    }
   },[])
 
-  const setAuth=(boolean)=>{
-    setIsAuthenticated(boolean);
-    localStorage.setItem('isAuthenticated',boolean.toString());
+  const setAuth=(bool)=>{
+    setIsAuthenticated(bool);
+    localStorage.setItem('isAuthenticated',bool);
   }
   return (
     <Router>
-      <Navbar/>
-      <Routes>
-        <Route path="/home" element={<Homepage/>}/>  
-        <Route path="/signup" element={!isAuthenticated ? <Registration setAuth={setAuth}/>:<Dashboard setAuth={setAuth}/>}/>    
-        <Route path="/" element={<Homepage/>}/>  
-        <Route path="/dashboard" element={isAuthenticated ? <Dashboard setAuth={setAuth}/>:<Registration setAuth={setAuth}/>}/>
-      </Routes>
+      <Navbar setAuth={setAuth} />
+      <main className="flex-grow">
+        <Routes>
+          <Route path="/home" element={<Homepage />} />  
+          <Route path="/signup" element={<Registration setAuth={(bool) => setAuth(bool)} />} />    
+          <Route path="/" element={<Homepage />} />  
+          <Route path="/dashboard" element={isAuthenticated ? <Dashboard setAuth={(bool) => setAuth(bool)} /> : <Registration setAuth={setAuth} />} />
+          <Route path="*" element={<NotFound/>} />
+        </Routes>
+      </main>
+      <Footer />
     </Router>
   );
 }

@@ -49,7 +49,8 @@ export const registerUser = asyncHandler(async(req,res)=>{
     }
 
     const token = generateToken(res,newUser.rows[0].user_id);
-    res.status(201).json({id:newUser.rows[0].user_id,name:newUser.rows[0].name,email:newUser.rows[0].email,token});
+    res.status(201).json({id:newUser.rows[0].user_id,name:newUser.rows[0].name,email:newUser.rows[0].email,
+        image_url:newUser.rows[0].image_url,token});
     console.log("User registered");
 })
 
@@ -77,7 +78,8 @@ export const loginUser = asyncHandler(async(req,res)=>{
         throw new Error('Invalid password or email');
     }
     const token = generateToken(res,user.rows[0].user_id);
-    res.status(200).json({id:user.rows[0].user_id,name:user.rows[0].name,email:user.rows[0].email,token});
+    res.status(200).json({id:user.rows[0].user_id,name:user.rows[0].name,email:user.rows[0].email,
+        image_url:user.rows[0].image_url,token});
     console.log("User logged in");
 })
 
@@ -98,7 +100,6 @@ export const getUserProfile = asyncHandler(async(req,res)=>{
     }
     res.status(200).json(user.rows[0]);
     console.log(user.rows[0]);
-
 })
 
 // @desc   Update user profile
@@ -169,5 +170,5 @@ export const updateUserProfile = asyncHandler(async(req,res)=>{
 
 export const logoutUser = asyncHandler(async(req,res)=>{
     
-    res.status(200).json({message:'Logout successfull'});
+    res.status(200).json({message:'Logout successful'});
 })
