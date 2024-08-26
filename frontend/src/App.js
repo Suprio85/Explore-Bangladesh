@@ -6,6 +6,10 @@ import Registration from './Random/RegistrationPage';
 import Dashboard from './Random/Dashboard';
 import Footer from './components/Footer';
 import NotFound from './pages/NotFound';
+import Plan from './pages/Plan';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
+import suggestions from './Util/suggestion';
 
 import {
   BrowserRouter as Router,
@@ -36,9 +40,18 @@ function App() {
           <Route path="/" element={<Homepage />} />  
           <Route path="/dashboard" element={isAuthenticated ? <Dashboard setAuth={(bool) => setAuth(bool)} /> : <Registration setAuth={setAuth} />} />
           <Route path="*" element={<NotFound/>} />
+          <Route path="/plan" element={<Plan />} />
         </Routes>
       </main>
       <Footer />
+      <ToastContainer
+      position='top-center'
+      autoClose={1000}
+      hideProgressBar={true}
+      newestOnTop={true}
+      closeOnClick
+       theme='colored'
+      />
     </Router>
   );
 }

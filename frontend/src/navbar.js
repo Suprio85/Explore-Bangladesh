@@ -35,7 +35,7 @@ const Navbar = ({setAuth}) => {
         getUser();
     },[token])
 
-    const isHome = location.pathname === '/' || location.pathname === '/dashboard';
+    const isHome = location.pathname === '/' || location.pathname === '/dashboard'|| location.pathname === '/signup';
     const textColor = isHome ? 'text-white' : 'text-black';
     const navbarStyle = isHome ? 'fixed bg-transparent' : 'static bg-white';
 
@@ -53,7 +53,9 @@ const Navbar = ({setAuth}) => {
                 <div className={`flex w-2/3 justify-evenly font-ubuntu text-xl ${textColor}`}>
                     <div>EXPLORE</div>
                     <div>EXPERIENCE</div>
-                    <div>PLAN</div>
+                    <div>
+                        <Link to="/plan">PLANS</Link>    
+                  </div>
                 </div>
             </div>
             {token ? (

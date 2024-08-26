@@ -4,38 +4,7 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 import SVG from "../StaticImage/Alpona2.svg"
 
-const Template = [
-    {
-        categoryName: 'Sea Beaches',
-        categoryImage: "https://images.pexels.com/photos/6113097/pexels-photo-6113097.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-        categoryDescription: "Lorem Ipsum",
-    },
-    {
-        categoryName: 'Hill Track',
-        categoryImage: "https://cdn.pixabay.com/photo/2023/05/10/10/33/keokradong-7983537_1280.jpg",
-        categoryDescription: "Lorem Ipsum",
-    },
-    {
-        categoryName: 'Mangrove Area',
-        categoryImage: "https://images.pexels.com/photos/726298/pexels-photo-726298.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-        categoryDescription: "Lorem Ipsum",
-    },
-    {
-        categoryName: 'Mangrove Area',
-        categoryImage: "https://images.pexels.com/photos/6113097/pexels-photo-6113097.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-        categoryDescription: "Lorem Ipsum",
-    },
-    {
-        categoryName: 'Historical Places',
-        categoryImage: "https://cdn.pixabay.com/photo/2017/08/30/22/33/fort-aurangabad-2698844_1280.jpg",
-        categoryDescription: "Lorem Ipsum",
-    },
-    {
-        categoryName: 'Historical Places',
-        categoryImage: "https://cdn.pixabay.com/photo/2017/08/30/22/33/fort-aurangabad-2698844_1280.jpg",
-        categoryDescription: "Lorem Ipsum",
-    },
-]
+
 const Categorycard = ({ category }) => {
     console.log(category);
     useEffect(() => {
