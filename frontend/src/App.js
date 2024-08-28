@@ -9,7 +9,6 @@ import NotFound from './pages/NotFound';
 import Plan from './pages/Plan';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
-import suggestions from './Util/suggestion';
 
 import {
   BrowserRouter as Router,
@@ -19,12 +18,36 @@ import {
 
 function App() {
   const [isAuthenticated,setIsAuthenticated]=useState(false);
+  const [cartItems, setCartItems] = useState([]);
   useEffect(()=>{
     const checkAuth=localStorage.getItem('isAuthenticated')==='true';
     if(checkAuth){
       setIsAuthenticated(true);
     }
   },[])
+
+  useEffect(() => {
+    const fetchTourPackages = async () => {
+      try {
+        const response = await fetch('http://localhost:5000/api/cart',{
+          method:'GET',
+          headers:{
+            Authorization: `Bearer ${localStorage.token}`
+          }
+        });
+        const data = await response.json();
+        console.log(data);
+        setCartItems(data);
+      } catch (error) {
+        console.error("Error fetching tour packages:", error);
+      }
+    };
+    
+    if(localStorage.token)
+    fetchTourPackages();
+
+
+  }, []);
 
   const setAuth=(bool)=>{
     setIsAuthenticated(bool);
@@ -40,7 +63,7 @@ function App() {
           <Route path="/" element={<Homepage />} />  
           <Route path="/dashboard" element={isAuthenticated ? <Dashboard setAuth={(bool) => setAuth(bool)} /> : <Registration setAuth={setAuth} />} />
           <Route path="*" element={<NotFound/>} />
-          <Route path="/plan" element={<Plan />} />
+          <Route path="/plan" element={<Plan setCartItems={setCartItems} cartItems={cartItems} />} />
         </Routes>
       </main>
       <Footer />

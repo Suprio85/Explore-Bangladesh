@@ -1,30 +1,8 @@
 import React, { useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
-
-const SearchBar = ({ suggestions }) => {
-  const [query, setQuery] = useState('');
-  const [filteredSuggestions, setFilteredSuggestions] = useState([]);
-  const [isFocused, setIsFocused] = useState(false);
-
-  const handleInputChange = (e) => {
-    const value = e.target.value;
-    setQuery(value);
-    if (value) {
-      const filtered = suggestions.filter((suggestion) =>
-        suggestion.toLowerCase().includes(value.toLowerCase())
-      );
-      setFilteredSuggestions(filtered);
-    } else {
-      setFilteredSuggestions([]);
-    }
-  };
-
-  const handleSuggestionClick = (e,suggestion) => {
-    console.log('Suggestion clicked:', suggestion);
-    setQuery(suggestion);
-    setFilteredSuggestions([]);
-  };
-
+import suggestions from "../Util/suggestion";
+const SearchBar = ({query,filteredSuggestions,handleInputChange,handleSuggestionClick}) => {
+  
   return (
     <div className="relative w-full max-w-md mx-auto">
       <div className="flex items-center bg-white rounded-full shadow-sm border border-gray-300 focus-within:shadow-lg transition-shadow duration-300 overflow-hidden">
@@ -35,11 +13,9 @@ const SearchBar = ({ suggestions }) => {
           placeholder="Search"
           value={query}
           onChange={handleInputChange}
-          onFocus={() => setIsFocused(true)}
-          onBlur={() => setTimeout(() => setIsFocused(false), 100)}
         />
       </div>
-      {isFocused && filteredSuggestions.length > 0 && (
+      {filteredSuggestions.length > 0 && (
         <div className="absolute top-full left-0 w-full bg-white border border-gray-300 rounded-b-lg shadow-lg z-10">
           {filteredSuggestions.map((suggestion, index) => (
             <p

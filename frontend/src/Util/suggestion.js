@@ -1,9 +1,7 @@
 const suggestions = [
-    'DHAKA',
-    'Chittagong',
      'Khulna',
      'Saint Martin',
-     'Coxs Bazar',
+     'Cox\'s Bazar',
      'Sylhet',
      'Sundarbans',
      'Rangamati',
@@ -13,7 +11,6 @@ const suggestions = [
      'beach',
      'Mosque',
      'Temple',
-     ''
   ];
 
 export default suggestions;

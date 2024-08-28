@@ -7,8 +7,33 @@ import asyncHandler from 'express-async-handler';
 
 
 export const getTourPackages = asyncHandler(async(req,res)=>{
-    const query = `SELECT * FROM "Tour_Packages"`;
+    const query = `SELECT 
+    tp.id, 
+    tp.name, 
+    tp.description, 
+    tp.price, 
+    tp.image_url,
+    tp.total_enrollment, 
+    tp.group_size,
+    tp.tour_duration,
+    COALESCE(AVG(pr.rating), 0) AS rating
+FROM 
+    "Tour_Packages" tp
+LEFT JOIN 
+    "Package Review" pr
+ON 
+    tp.id = pr.tour_package_id
+GROUP BY
+    tp.id, 
+    tp.name, 
+    tp.description, 
+    tp.price, 
+    tp.image_url, 
+    tp.total_enrollment, 
+    tp.group_size,
+    tp.tour_duration;`;
     const packages = await pool.query(query);
+    //console.log(packages.rows);
     res.json(packages.rows);
 })
 
@@ -26,6 +51,7 @@ export const getTourPackageById = asyncHandler(async(req,res)=>{
     }
     res.json(packages.rows[0]);
 })
+
 
 // @desc    Get tour package places
 // @route   GET /api/tourpackage/:id/places
@@ -60,8 +86,8 @@ export const createCart = asyncHandler(async(req,res)=>{
     console.log(req.body);
     const tour_packages = req.body.cart;
     const user_id = req.user.user_id;
-    const query = `INSERT INTO "Cart" (price) VALUES (0) RETURNING id`;
-    const cart = await pool.query(query);
+    const query = `INSERT INTO "Cart" (user_id,price) VALUES ($1,0) RETURNING *`;
+    const cart = await pool.query(query,[user_id]);
     const cart_id = cart.rows[0].id;
     console.log(cart_id);
     let total_cost = 0;

@@ -50,7 +50,7 @@ const Navbar = ({setAuth}) => {
                 </Link>
             </div>
             <div className='flex-grow h-full flex justify-center items-center'>
-                <div className={`flex w-2/3 justify-evenly font-ubuntu text-xl ${textColor}`}>
+                <div className={`flex flex-wrap w-2/3 justify-evenly font-ubuntu text-xl ${textColor} space-x-4`}>
                     <div>EXPLORE</div>
                     <div>EXPERIENCE</div>
                     <div>
@@ -59,7 +59,7 @@ const Navbar = ({setAuth}) => {
                 </div>
             </div>
             {token ? (
-                <div className='w-1/4 h-full flex justify-center items-center space-x-3'>
+                <div className='w-1/4 flex justify-center items-center space-x-3 flex-wrap'>
                     <div className={`font-ubuntu text-sm bg-slate-800 text-white rounded-full px-2 py-1 transform hover:text-black hover:bg-white duration-500 hover:border-2 hover:border-black`}>
                         <Link to="/dashboard">{user?.name}</Link>
                     </div>
@@ -69,7 +69,7 @@ const Navbar = ({setAuth}) => {
                     </button>
                 </div>
             ) : (
-                <div className='w-1/4 h-full flex justify-center items-center'>
+                <div className='w-1/4 h-full flex  justify-center items-center'>
                     <div className={`font-ubuntu text-xl ${textColor}`}>
                         <Link to="/signup">SIGN IN</Link>
                     </div>
